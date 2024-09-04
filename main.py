@@ -60,6 +60,7 @@ def fetch_and_process_parquet(url, percentile=0.9):
         raise ValueError("Neither 'trip_distance' nor 'Trip_Distance' columns are found in the dataframe.")
     
     thresh = df[distance_column].quantile(0.9)
+    logger.info(f"90th percentile above: {thresh}")
     df_90 = df[df[distance_column] > thresh]
     logger.info(f"Final data has {len(df_90)} rows")
     # {url:df_90.index.tolist()}
