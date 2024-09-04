@@ -87,7 +87,7 @@ def main():
     print(f"The URL you entered is: {url}")
     urls = get_parquet_urls()
     if url in urls:
-        fetch_and_process_parquet(url)
+        df = fetch_and_process_parquet(url)
     else:
         year = -1
         while int(year) not in range(2009,2025):
@@ -98,12 +98,13 @@ def main():
         while month not in available_months:
             month = input(f"Select the month, including the starting 0 if applicable: {available_months}: ")
         url = [u[1] for u in urls if u[0]==month][0]
-        b = input(f"Would you like the results saved locally? y/n: ")
         df = fetch_and_process_parquet(url)
-        if b.lower() == 'y':
-            filepath = f"data/{year}-{month}-yellow-90.csv"
-            df.to_csv(filepath)
-            print(f"Saved to: {filepath}")
+
+    b = input(f"Would you like the results saved locally? y/n: ")
+    if b.lower() == 'y':
+        filepath = f"data/{year}-{month}-yellow-90.csv"
+        df.to_csv(filepath)
+        print(f"Saved to: {filepath}")
         
     
 
